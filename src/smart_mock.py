@@ -286,3 +286,6 @@ def _smart_mock(
 # Inject into patch
 #patch.object = _smart_mock
 patch.smart_object = _smart_mock
+
+# TODO:
+# patch.smart()
