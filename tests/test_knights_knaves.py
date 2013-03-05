@@ -185,3 +185,6 @@ class KnaveTestCase(TestCase):
 
         echo.assert_never_called()
         echo.assert_times_called(0)
+
+        # This is actually nonsense, and should fail!
+        echo.assert_this_is_nonsense()
