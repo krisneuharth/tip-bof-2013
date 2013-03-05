@@ -1,13 +1,2 @@
-/.idea/encodings.xml
-/.idea/inspectionProfiles/profiles_settings.xml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/scopes/scope_settings.xml
-/.idea/tip-bof-2013.iml
-/.idea/vcs.xml
-/.idea/workspace.xml
-/src/__init__.pyc
-/src/knights_knaves.pyc
-/src/smart_mock.pyc
-/tests/__init__.pyc
-/tests/test_knights_knaves.pyc
+/.idea/*
+*.pyc
