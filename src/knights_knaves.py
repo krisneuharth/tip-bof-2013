@@ -19,8 +19,8 @@ class Actor(object):
     def respond(self, r):
         return r
 
-    def echo(self, e):
-        print e
+    def conjure_response(self, q):
+        raise NotImplemented
 
     def tell_truth(self):
         raise NotImplemented
@@ -29,11 +29,18 @@ class Actor(object):
 class Knight(Actor):
     def query(self, q):
         """
-        Receive a query
+        Receive a query, respond
         """
 
-        self.echo(q)
-        return self.respond(u'We are of the same kind.')
+        r = self.conjure_response(q)
+        return self.respond(r)
+
+    def conjure_response(self, q):
+        """
+        Naive response
+        """
+
+        return u'We are of the same kind.'
 
     def tell_truth(self):
         """
@@ -49,8 +56,16 @@ class Knave(Actor):
         Receive a query
         """
 
-        self.echo(q)
-        return self.respond(u'We are of different kinds.')
+        r = self.conjure_response(q)
+        return self.respond(r)
+
+
+    def conjure_response(self, q):
+        """
+        Naive response
+        """
+
+        return u'We are of different kinds.'
 
     def tell_truth(self):
         """

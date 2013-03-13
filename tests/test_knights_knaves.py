@@ -21,9 +21,9 @@ class KnightTestCase(TestCase):
 
         self.assertEqual(True, knight.tell_truth())
 
-    @patch.object(Knight, 'echo')
-    def test_echo(self, echo):
-        echo.return_value = None
+    @patch.object(Knight, 'conjure_response')
+    def test_echo(self, conjure_response):
+        conjure_response.return_value = None
         knight = Knight('Foo')
         knight.query('foo')
 
@@ -37,29 +37,29 @@ class KnightTestCase(TestCase):
         #
         # Notice these all test pretty much the same thing
         #
-        echo.assert_called_with('foo')
-        echo.assert_called_once_with('foo')
-        echo.assert_any_call('foo')
+        conjure_response.assert_called_with('foo')
+        conjure_response.assert_called_once_with('foo')
+        conjure_response.assert_any_call('foo')
 
         #
         # Also, notice these all test pretty much the same thing
         #
-        self.assertEqual(echo.called, True)
-        self.assertEqual(echo.call_count, 1)
+        self.assertEqual(conjure_response.called, True)
+        self.assertEqual(conjure_response.call_count, 1)
 
         calls = [call('foo')]
-        echo.assert_has_calls(calls)
+        conjure_response.assert_has_calls(calls)
 
         #
         # But what about this?
         #
-        echo.assert_called_once()
-        echo.assert_called_once('foo')
+        conjure_response.assert_called_once()
+        conjure_response.assert_called_once('foo')
 
         #
         # Or this?
         #
-        echo.assert_called_twice_with('foo')
+        conjure_response.assert_called_twice_with('foo')
 
         #
         # Note that these still pass, and are very subtly
@@ -103,9 +103,9 @@ class KnightTestCase(TestCase):
 
         # For example, why can't we have things like these?
         #
-        # echo.assert_called_with(times=3, 'foo')
-        # echo.assert_called_with(times=0, 'foo')
-        # echo.assert_never_called_with('foo')
+        # conjure_response.assert_called_with(times=3, 'foo')
+        # conjure_response.assert_called_with(times=0, 'foo')
+        # conjure_response.assert_never_called_with('foo')
         # etc...
         #
         # Also, any mock method with assert_* should throw an error if it is not
@@ -120,9 +120,8 @@ class KnightTestCase(TestCase):
 
 
         # Secret weapons
-        #print echo.mock_calls
-        #print echo.call_list()
-
+        #print conjure_response.mock_calls
+        #print conjure_response.call_list()
 
 class KnaveTestCase(TestCase):
     """
@@ -142,49 +141,53 @@ class KnaveTestCase(TestCase):
 
     def test_echo(self):
         knave = Knave('Foo')
-        knave.echo = SmartMock(return_value=None)
+        knave.conjure_response = SmartMock(return_value=None)
 
         knave.query('foo')
-        knave.echo.assert_called_once()
+        knave.conjure_response.assert_called_once()
 
         knave.query('foo')
-        knave.echo.assert_times_called(2)
+        knave.conjure_response.assert_times_called(2)
 
         knave.query('foo')
-        knave.echo.assert_times_called_with(3, 'foo')
+        knave.conjure_response.assert_times_called_with(3, 'foo')
 
-        knave.echo.assert_times_called(3)
+        knave.conjure_response.assert_times_called(3)
 
     def test_echo_never_called(self):
         knave = Knave('Foo')
-        knave.echo = SmartMock(return_value=None)
+        knave.conjure_response = SmartMock(return_value=None)
 
-        knave.echo.assert_never_called()
-        knave.echo.assert_times_called(0)
+        knave.conjure_response.assert_never_called()
+        knave.conjure_response.assert_times_called(0)
 
-    @patch.smart_object(Knave, 'echo')
-    def test_echo_with_patch(self, echo):
-        echo.return_value = None
+    @patch.object(Knave, 'conjure_response', spec=SmartMock)
+    def test_echo_with_patch(self, conjure_response):
+        conjure_response.return_value = None
 
         knave = Knave('Foo')
         knave.query('foo')
 
-        echo.assert_called_once()
+        conjure_response.assert_called_once()
 
         knave.query('foo')
-        echo.assert_times_called(2)
+        conjure_response.assert_times_called(2)
 
         knave.query('foo')
-        echo.assert_times_called_with(3, 'foo')
+        conjure_response.assert_times_called_with(3, 'foo')
 
-        echo.assert_times_called(3)
+        conjure_response.assert_times_called(3)
 
-    @patch.smart_object(Knave, 'echo')
-    def test_echo_never_called_with_patch(self, echo):
-        echo.return_value = None
+    @patch.object(Knave, 'conjure_response', spec=SmartMock)
+    def test_echo_never_called_with_patch(self, conjure_response):
+        conjure_response.return_value = None
 
-        echo.assert_never_called()
-        echo.assert_times_called(0)
+        conjure_response.assert_never_called()
+        conjure_response.assert_times_called(0)
 
         # This is actually nonsense, and should fail!
-        echo.assert_this_is_nonsense()
+        conjure_response.assert_this_is_nonsense()
+
+    @patch.object(Knave, 'conjure_response', spec=SmartMock)
+    def test_debug(self, conjure_response):
+        conjure_response.debug()
