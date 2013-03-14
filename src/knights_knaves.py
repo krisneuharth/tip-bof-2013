@@ -14,7 +14,12 @@ class Actor(object):
         return '%s - %s' % (cls, self.name)
 
     def query(self, q):
-        raise NotImplemented
+        """
+        Receive a query, respond
+        """
+
+        r = self.conjure_response(q)
+        return self.respond(r)
 
     def respond(self, r):
         return r
@@ -27,13 +32,9 @@ class Actor(object):
 
 
 class Knight(Actor):
-    def query(self, q):
-        """
-        Receive a query, respond
-        """
-
-        r = self.conjure_response(q)
-        return self.respond(r)
+    """
+    Knight
+    """
 
     def conjure_response(self, q):
         """
@@ -51,14 +52,9 @@ class Knight(Actor):
 
 
 class Knave(Actor):
-    def query(self, q):
-        """
-        Receive a query
-        """
-
-        r = self.conjure_response(q)
-        return self.respond(r)
-
+    """
+    Knave
+    """
 
     def conjure_response(self, q):
         """
@@ -123,7 +119,7 @@ class Game(object):
 
         for q in [u'"What kind are you?"']:
             for actor in self.actors:
-                print
+                print q
                 r = actor.query(q)
                 print u'%s: %s' % (actor.name, r)
 
@@ -185,7 +181,7 @@ class Game(object):
 
         """
 
-        print u'\nYou were eaten by a goat!'
+        print u'\nYou are eaten by a goat!'
         raw_input('<press a key>\n')
 
         print u'\nWhile this island is largely inhabited by knights and knaves, you obviously neglected the part on the wiki page about the carnivorous goats.'

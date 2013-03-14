@@ -1,4 +1,4 @@
-from mock import MagicMock, _patch, DEFAULT, patch, _get_target
+from mock import MagicMock
 
 
 class SmartMock(MagicMock):
@@ -8,24 +8,6 @@ class SmartMock(MagicMock):
 
     def _pluralization(self, times):
         return 'times' if times != 1 else 'time'
-
-    def debug(self):
-        """
-        Provide a simple way to see what is wrong
-        with the mock calls
-        """
-
-        print
-        print "*" * 50
-        print 'Name: ', self.__repr__()
-        print 'Type: ', type(self)
-
-        print 'Target: ', self.target
-        print 'Call Count: ', str(self.call_count)
-        print 'Mock Calls: ', self.mock_calls
-        print 'Call List: ', self.call_list()
-        print "*" * 50
-        print
 
     # Derived assertions
     def assert_never_called(self, *args, **kwargs):
