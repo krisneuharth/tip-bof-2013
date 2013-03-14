@@ -1,4 +1,4 @@
-"Your Tests May Be Lying To You"
+Your Tests Are Lying To You
 ====================================
 
-A talk about extending Mock to be given at PyCon TIP-BOF 2013.
+A talk about testing mistakes and extending Mock to be given at PyCon TIP-BOF 2013.
