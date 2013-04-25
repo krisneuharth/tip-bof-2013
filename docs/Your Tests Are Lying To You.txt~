@@ -1,0 +1,187 @@
+Your Tests Are
+Lying To You
+Kris Neuharth
+kris.neuharth@gmail.com
+@krisneuharth
+github/krisneuharth
+github.com/krisneuharth
+
+Hello.
+ - Who Am I?
+
+ - I'm Kris and I am a Python developer at a company called TrueCar.
+
+ - I write web apps using Flask, primarily for the site that car dealerships interact with to price their cars and manage offers to their customers.
+
+ - Shameless plug: If the intersection of changing the automotive industry, automotive data, and Python development and testing is interesting, come talk to us. We are hiring! 
+
+
+Credit.
+ - Credit Where Credit Is Due
+ - Mock is awesome!
+ - Buy the man a drink. Seriously.
+
+
+Drink.
+ - Obligatory Flask Pull and Toast!
+
+ - This is liquid courage in case this turns ugly.
+
+
+Tests, Coverage, Statistics
+
+ - Our project currently has around 500 tests, with 76% coverage.
+
+ - Not too bad right?
+
+ - Of course we can all do better with test coverage but I thought we were in good shape.
+
+
+Until one day...
+assert_called_once()
+
+
+Lies. Damn, Lies.
+
+ - One of the other devs on the team pointed out that I had been errantly littering our code with assertions that did nothing!
+
+ - What you say? That's crazy.
+
+ - assert_called_once() is totally a valid assertion.
+
+
+Nope.
+
+Chuck Testa.
+
+ - No it isn't, but the test passes.
+
+
+My tests are lying to me!
+So What Happened?
+
+ - Am I just lazy? Was I just copy and pasting this around?
+
+ - The truth is, yes.
+
+ - But is that the only thing going on here?
+
+ - Maybe not.
+
+ - Mock provides a powerful way to mock out methods and methods on objects
+
+ - Should I even be able to make these assertions that don't exist?
+
+
+Let's find out.
+
+RTFM
+
+ - Thankfully this sort of problem is well documented and is solved with something called a "spec."
+
+ - When a spec is specified, Mock will raise exceptions when you try to mock methods that do not exist.
+
+ - Awesome.
+
+ - Simple fix, use a spec.
+
+ - Also, worth mentioning but I don't have time to get into:
+
+    "spec_set" - does something similar, it prevents you from setting properties of the mocked object that do not exist.
+
+"   autospec" - only access attributes on the mock that exist on the real class
+
+ - This problem is actually described in detail: 
+
+    http://www.voidspace.org.uk/python/mock/helpers.html#autospeccing
+    
+
+But Why Was I Making This Mistake In the First Place?
+
+ - I have read the M!
+
+ - I think what happened is that the more I used Mock and the Python unittest library, the less I looked up the assertions in the documentation.
+
+ - I had gotten lazy and started fusing various assertions together from memory.
+
+ - I had made the incorrect assumption that there should be symmetry in the Mock assertion APIs.
+
+ - My brain had created symmetry where there was none.
+
+
+Extending Mock
+
+ - From the Mock documentation we can clearly see:
+    assert_called_with
+    assert_called_once_with
+    assert_any_call
+    assert_has_calls
+
+ - And that what I was doing is wrong:
+    assert_called_once
+
+
+ - But what if I wanted to add it? I will need to extend Mock.
+
+ - Michael provides a blog post on his site to this topic:
+
+    - http://www.voidspace.org.uk/python/weblog/arch_d7_2011_07_16.shtml#e1221
+
+ - It seems easy enough.
+
+
+Enter 'SmartMock'
+
+ - SmartMock is certainly not a criticism that MagicMock or Mock are dumb.
+
+ - More that it helps me be smarter.
+
+ - <show the code>
+
+ - <show how the code plugs into patch.object>
+
+ - I wasn't sure how to get SmartMock and Knave to both have spec protect me, so I created a hybrid object called TestKnave. This may be wrong, but seems to work? 
+
+ - I'd be happy to hear comments about this later.
+
+
+Contrived Code To Test
+
+ - Who doesn't love contrived code examples?
+
+ - <run knights and knaves game>
+
+ - <run the tests>
+
+
+Excellent.
+
+ - Our tests run. 
+
+ - The SmartMock assertions are being used.
+
+ - While most of the tests pass, the two that do not, should not.
+
+ - They are asserting nonsensical things on their mocked object.
+
+ - This is the way it should be.
+
+
+tl;dr
+
+ - If there is anything to learn from this talk:
+
+    Thanks Michael!
+
+    RTFM, seriously.
+
+    Use spec and similar
+
+    Extend Mock for your own purposes
+
+    Scotch
+
+
+Obligatory code and slides are on github statement.
+
+
